@@ -1,4 +1,34 @@
-export default function AccountPage() {
+import axios from "axios";
+import React from "react";
+import { Ref } from "react";
+import { useEffect, useState, useCallback } from "react";
+
+
+
+export default function AccountPage(props) {
+
+  
+
+
+  function login(props) {
+    console.log('data: ', props.data)
+    let username = document.querySelector('.username')
+    let password = document.querySelector('.logPassword')
+    console.log('username set as:', username.value)
+    console.log('password set as:', password.value)
+    axios.post('https://8000-rdg97-projectredlineba-3mx4fceg9hi.ws-us77.gitpod.io/Users/', {
+      firstName: 'Fred',
+      lastName: 'Flintstone'
+    })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+
+
     return (
         <div className='d-flex p-3 bg-warning text-white asside d-none d-lg-block'>
         <div className='container-fluid bg-light border text-dark'>
@@ -22,18 +52,18 @@ export default function AccountPage() {
                   <form>
                           <div class="input-group">
                             <span class="input-group-text">@</span>
-                            <input type="text" class="form-control" placeholder="Username"></input>
+                            <input type="text" class="form-control username" placeholder="Username" id='username'></input>
                           </div>
 
                           <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Password"></input>
+                            <input type="text" class="form-control logPassword" placeholder="Password" id="logPassword"></input>
                             <span class="input-group-text">🔒</span>
                           </div>
                         </form>
                   </div>
                   
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary">Log in</button>
+                    <button type="button" className="btn btn-primary" onClick={login}>Log in</button>
                   
                 </div>
               </div>
