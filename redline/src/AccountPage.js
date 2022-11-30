@@ -54,6 +54,7 @@ export default function AccountPage(props) {
 //      console.log('LOGIN FAILED: ', error);
 //    });
 handleLogin(lusername,lpassword)
+setTimeout(() => { window.location.reload()}, "200")
   }
 
 
@@ -121,6 +122,7 @@ handleLogin(lusername,lpassword)
 function test() {
   authService.logout();
   setLoggedAs(" ")
+  window.location.reload()
 }
     return (
       
