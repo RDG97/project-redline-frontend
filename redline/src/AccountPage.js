@@ -3,20 +3,62 @@ import React from "react";
 import { Ref } from "react";
 import { useEffect, useState, useCallback } from "react";
 
+import { useGlobalState } from "./context/GlobalState";
+import authService from "./services/auth.service";
+
+
+import jwtDecode from "jwt-decode";
+
 //QUESTIONS "detail": "Authentication credentials were not provided." when viewing API, how to handle logins (how to know if youre logged in and as what user), how to do login request
 
 export default function AccountPage(props) {
 
+
+
+  const [ state, dispatch ] = useGlobalState();
+
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = (e) => {
+    console.log('username is: ', username)
+
+    authService
+    
+      .login(username, password)
+      .then(async (resp) => {
+        let data = jwtDecode(resp.access)
+        await dispatch({
+          currentUserToken: resp.access,
+          currentUser: data
+        })
+      });
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   function createAccount(props) {
     console.log('ran create account')
-    let username = document.querySelector('.username')
+    let cusername = document.querySelector('.username')
     let pass1 = document.querySelector('.pass1')
     let pass2 = document.querySelector('.pass2')
     let sname = document.querySelector('.sname')
     let bio = document.querySelector('.bio')
     let pfp = document.getElementById('pfp')
     let email = document.querySelector('.email')
-    let expl = document.getElementById("expl")
+    let expl = document.getElementById('expl')
     console.log('expl is: ', expl.checked)
 
     if (expl.checked === true) {
@@ -38,7 +80,7 @@ export default function AccountPage(props) {
       screen_name: sname.value,
       bio: bio.value,
       profile_pic: pfp.value,
-      username: username.value,
+      username: cusername.value,
       password: pass1.value,
       email: email.value
     })
@@ -56,25 +98,34 @@ export default function AccountPage(props) {
 
   function login(props) {
     console.log('data: ', props.data)
-    let lusername = document.querySelector('.lusername')
-    let password = document.querySelector('.logPassword')
-    console.log('username set as:', lusername.value)
-    console.log('password set as:', password.value)
-//    axios.post('https://8000-rdg97-projectredlineba-3mx4fceg9hi.ws-us77.gitpod.io/Users/', {
-//      firstName: 'Fred',
-//      lastName: 'Flintstone'
+    let lusername = document.querySelector('.lusername').value
+    let lpassword = document.querySelector('.logPassword').value
+    console.log(lusername)
+    setPassword(lpassword)
+    setUsername(lusername)
+
+
+
+
+//    axios.post('https://8000-rdg97-projectredlineba-3mx4fceg9hi.ws-us77.gitpod.io/token/obtain/', {
+//      username: lusername.value,
+//      password: lpassword.value
 //    })
 //    .then(function (response) {
-//      console.log(response);
+//      console.log('LOGIN WORKED!: ', response);
 //    })
 //    .catch(function (error) {
-//      console.log(error);
+//      console.log('LOGIN FAILED: ', error);
 //    });
   }
-
+function tesst(props) {
+  console.log('username', username)
+}
 
     return (
+      
         <div className='d-flex p-3 bg-warning text-white asside d-none d-lg-block'>
+          <button onClick={handleLogin}></button>
         <div className='container-fluid bg-light border text-dark'>
         <div className='border pfp bg-secondary rounded-pill'></div>
         <p>you arent signed in!</p>
@@ -92,6 +143,7 @@ export default function AccountPage(props) {
         <form>
               <div class="input-group">
                 <input type="text" class="form-control username" placeholder="Username (will be your @)" id='username'></input>
+                
               </div>
               <br></br>
               <div class="input-group">
@@ -123,7 +175,6 @@ export default function AccountPage(props) {
       <form>
       <div class="input-group">
                             <input type="text" class="form-control sname" placeholder="Screen name" id="sname"></input>
-                            
                           </div>
                           <br></br>
                           <div class="input-group">
