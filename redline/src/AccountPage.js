@@ -2,30 +2,30 @@ import axios from "axios";
 import React from "react";
 import { Ref } from "react";
 import { useEffect, useState, useCallback } from "react";
-
+import { Link } from "react-router-dom";
 import { useGlobalState } from "./context/GlobalState";
 import authService from "./services/auth.service";
 
 
 import jwtDecode from "jwt-decode";
 
-//QUESTIONS "detail": "Authentication credentials were not provided." when viewing API, how to handle logins (how to know if youre logged in and as what user), how to do login request
 
 export default function AccountPage(props) {
 
 
-
-  const [ state, dispatch ] = useGlobalState();
+  const [loggedAs, setLoggedAs] = useState("");
+  const [ state, dispatch ] = useGlobalState(); 
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = (e) => {
+
+  const handleLogin = (un,pw) => {
     console.log('username is: ', username)
 
     authService
     
-      .login(username, password)
+      .login(un, pw)
       .then(async (resp) => {
         let data = jwtDecode(resp.access)
         await dispatch({
@@ -35,18 +35,45 @@ export default function AccountPage(props) {
       });
   }
 
+  function login(props) {
+    console.log('data: ', props.data)
+    let lusername = document.querySelector('.lusername').value
+    let lpassword = document.querySelector('.logPassword').value
+    console.log(lusername)
+    setPassword(lpassword)
+    setUsername(lusername)
+
+//    axios.post('https://8000-rdg97-projectredlineba-3mx4fceg9hi.ws-us77.gitpod.io/token/obtain/', {
+//      username: lusername.value,
+//      password: lpassword.value
+//    })
+//    .then(function (response) {
+//      console.log('LOGIN WORKED!: ', response);
+//    })
+//    .catch(function (error) {
+//      console.log('LOGIN FAILED: ', error);
+//    });
+handleLogin(lusername,lpassword)
+  }
 
 
+  if (state.currentUser != null && state.currentUser != undefined) {
+    const getbaseURL = `https://8000-rdg97-projectredlineba-3mx4fceg9hi.ws-us77.gitpod.io/Users/${state.currentUser.user_id}`
+    
+  
+    useEffect(() => {
+  
+      axios.get(getbaseURL).then((response) => {
+        const dataObj = response.data
+        console.log('got a user response! it looks like:', dataObj)
+        setLoggedAs(dataObj);
 
-
-
-
-
-
-
-
-
-
+      })
+      .catch(function (error){
+      console.log('logged account display ERROR: ', error)
+      })
+      ;
+  }, []);}
 
 
   function createAccount(props) {
@@ -91,47 +118,41 @@ export default function AccountPage(props) {
       console.log(error);
     });
   }
-
-
-  
-
-
-  function login(props) {
-    console.log('data: ', props.data)
-    let lusername = document.querySelector('.lusername').value
-    let lpassword = document.querySelector('.logPassword').value
-    console.log(lusername)
-    setPassword(lpassword)
-    setUsername(lusername)
-
-
-
-
-//    axios.post('https://8000-rdg97-projectredlineba-3mx4fceg9hi.ws-us77.gitpod.io/token/obtain/', {
-//      username: lusername.value,
-//      password: lpassword.value
-//    })
-//    .then(function (response) {
-//      console.log('LOGIN WORKED!: ', response);
-//    })
-//    .catch(function (error) {
-//      console.log('LOGIN FAILED: ', error);
-//    });
-  }
-function tesst(props) {
-  console.log('username', username)
+function test() {
+  authService.logout();
+  setLoggedAs(" ")
 }
-
     return (
       
         <div className='d-flex p-3 bg-warning text-white asside d-none d-lg-block'>
-          <button onClick={handleLogin}></button>
+
         <div className='container-fluid bg-light border text-dark'>
-        <div className='border pfp bg-secondary rounded-pill'></div>
-        <p>you arent signed in!</p>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginBackdrop">
-            Log in
-        </button>
+   
+
+
+        {
+          !state.currentUser && (
+            <>
+            <p>you arent signed in!</p>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginBackdrop">
+                Log in
+            </button>
+            </>
+          )
+        }
+         {
+          state.currentUser && (
+            <>
+            <div className='border pfp bg-secondary rounded-pill'><img src={loggedAs.profile_pic} className="pfp rounded-pill border"></img></div>
+              <h3>{loggedAs.screen_name}</h3>
+              <h6>@{loggedAs.username}</h6>
+              <a class="btn btn-primary"  onClick={test} role="button">Log Out</a>
+            </>
+          )
+        }
+
+
+        
         <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
@@ -139,6 +160,7 @@ function tesst(props) {
         <h5 class="modal-title" id="exampleModalToggleLabel">Register</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
+
       <div class="modal-body">
         <form>
               <div class="input-group">
@@ -204,8 +226,10 @@ function tesst(props) {
     </div>
   </div>
 </div>
+{
+          !state.currentUser && (
 <a class="btn btn-primary" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Register</a>
-
+          )}
         </div>
                     <div class="modal fade text-dark" id="loginBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="loginBackdropLabel" aria-hidden="true">
               <div class="modal-dialog">
@@ -235,7 +259,8 @@ function tesst(props) {
                 </div>
               </div>
             </div>
+
       </div>
-      
+
     )
 }
