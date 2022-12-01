@@ -1,10 +1,12 @@
 import axios from "axios";
 import React from "react";
 import { Ref } from "react";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, state } from "react";
 import { Link } from "react-router-dom";
 import { useGlobalState } from "./context/GlobalState";
 import authService from "./services/auth.service";
+import App from "./App";
+
 
 
 import jwtDecode from "jwt-decode";
@@ -13,9 +15,8 @@ import jwtDecode from "jwt-decode";
 export default function AccountPage(props) {
 
 
-  const [loggedAs, setLoggedAs] = useState("");
+  const [loggedAs, setLoggedAs] = useState([]);
   const [ state, dispatch ] = useGlobalState(); 
-
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -43,38 +44,13 @@ export default function AccountPage(props) {
     setPassword(lpassword)
     setUsername(lusername)
 
-//    axios.post('https://8000-rdg97-projectredlineba-3mx4fceg9hi.ws-us77.gitpod.io/token/obtain/', {
-//      username: lusername.value,
-//      password: lpassword.value
-//    })
-//    .then(function (response) {
-//      console.log('LOGIN WORKED!: ', response);
-//    })
-//    .catch(function (error) {
-//      console.log('LOGIN FAILED: ', error);
-//    });
+
 handleLogin(lusername,lpassword)
 setTimeout(() => { window.location.reload()}, "200")
   }
 
 
-  if (state.currentUser != null && state.currentUser != undefined) {
-    const getbaseURL = `https://8000-rdg97-projectredlineba-3mx4fceg9hi.ws-us77.gitpod.io/Users/${state.currentUser.user_id}`
-    
-  
-    useEffect(() => {
-  
-      axios.get(getbaseURL).then((response) => {
-        const dataObj = response.data
-        console.log('got a user response! it looks like:', dataObj)
-        setLoggedAs(dataObj);
 
-      })
-      .catch(function (error){
-      console.log('logged account display ERROR: ', error)
-      })
-      ;
-  }, []);}
 
 
   function createAccount(props) {
@@ -119,17 +95,24 @@ setTimeout(() => { window.location.reload()}, "200")
       console.log(error);
     });
   }
-function test() {
+function logout(props) {
   authService.logout();
   setLoggedAs(" ")
   window.location.reload()
 }
+
+function postview() {
+  props.setPage('makepost')
+}
+
+
+
     return (
       
         <div className='d-flex p-3 bg-warning text-white asside d-none d-lg-block'>
 
         <div className='container-fluid bg-light border text-dark'>
-   
+
 
 
         {
@@ -139,16 +122,20 @@ function test() {
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginBackdrop">
                 Log in
             </button>
+
             </>
           )
         }
-         {
+        {
           state.currentUser && (
             <>
-            <div className='border pfp bg-secondary rounded-pill'><img src={loggedAs.profile_pic} className="pfp rounded-pill border"></img></div>
-              <h3>{loggedAs.screen_name}</h3>
-              <h6>@{loggedAs.username}</h6>
-              <a class="btn btn-primary"  onClick={test} role="button">Log Out</a>
+            <div className='border pfp bg-secondary rounded-pill'><img src={props.loggedAs.profile_pic} className="pfp rounded-pill border"></img></div>
+              <h3>{props.loggedAs.screen_name}</h3>
+              <h6>@{props.loggedAs.username}</h6>
+              <a class="btn btn-primary"  onClick={logout} role="button">Log Out</a>
+              <button type="button" class="btn btn-primary" onClick={postview} data-bs-target="#loginBackdrop">
+                Make a post
+            </button>
             </>
           )
         }
