@@ -42,8 +42,8 @@ console.log('auth', auth)
 
         {frog.map(product => (
             <div className=" bg-warning border border-dark p-3">
-            <img src={product.pfp}  style={{height: 60, width: 60}} className="pfp rounded-pill border" ></img><h1>{product.name}</h1>
-            <h4>{product.content}</h4>
+            <img src={product.pfp}  style={{height: 60, width: 60}} className="pfp rounded-pill border" ></img><h3>{product.name}</h3>
+            <h5>{product.content}</h5>
             <button type="button" class="btn btn-primary" >
                 Like
             </button>
