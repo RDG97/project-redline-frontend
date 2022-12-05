@@ -131,7 +131,7 @@ function postview() {
             <>
             <div className='border pfp bg-secondary rounded-pill'><img src={props.loggedAs.profile_pic} className="pfp rounded-pill border"></img></div>
               <h3>{props.loggedAs.screen_name}</h3>
-              <h6>@{props.loggedAs.username}</h6>
+              <h6 className="text-primary" onClick={() => {props.setProfilePage(props.loggedAs.username); props.setPage('yourprofile')}}>@{props.loggedAs.username}</h6>
               <a class="btn btn-primary"  onClick={logout} role="button">Log Out</a>
               <button type="button" class="btn btn-primary" onClick={postview} data-bs-target="#loginBackdrop">
                 Make a post

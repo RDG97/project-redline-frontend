@@ -6,9 +6,7 @@ export default function MakePost(props) {
         let content = document.querySelector('.post').value
         let author = props.loggedAs.id
         let expl = document.getElementById('expl')
-        console.log('expl is: ', expl.checked)
-        console.log('post content: ', content)
-        console.log('post by: ', author)
+
         if (expl.checked === true) {
           console.log('explicit content off!')
           expl = 1
