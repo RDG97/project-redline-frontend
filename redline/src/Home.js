@@ -28,7 +28,6 @@ function likePost(postId) {
     liker: props.loggedAs.id,
     post: postId
     })
-props.setTest(`test${postId}`)
 }
 
 for (let i = 0; i < posts.length; i++) {
