@@ -21,6 +21,7 @@ export default function AccountPage(props) {
   const [password, setPassword] = useState("");
 
 
+
   const handleLogin = (un,pw) => {
     console.log('username is: ', username)
 
@@ -106,6 +107,10 @@ function postview() {
 }
 
 
+let following = props.following
+let followers = props.followers
+console.log('FOLLOWING DATA 2', props.following)
+
 
     return (
       
@@ -132,6 +137,11 @@ function postview() {
             <div className='border pfp bg-secondary rounded-pill'><img src={props.loggedAs.profile_pic} className="pfp rounded-pill border"></img></div>
               <h3>{props.loggedAs.screen_name}</h3>
               <h6 className="text-primary" onClick={() => {props.setProfilePage(props.loggedAs.username); props.setPage('yourprofile')}}>@{props.loggedAs.username}</h6>
+              <div class="btn-group-sm" role="group" aria-label="Basic outlined example">
+                        <button type="button" class="btn btn-outline-primary"> {0} Followers</button>
+                        
+                        <button type="button" class="btn btn-outline-primary">{0} Following</button>
+                        </div>
               <a class="btn btn-primary"  onClick={logout} role="button">Log Out</a>
               <button type="button" class="btn btn-primary" onClick={postview} data-bs-target="#loginBackdrop">
                 Make a post

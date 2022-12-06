@@ -6,21 +6,27 @@ export default function Profile(props) {
 let posts = props.data
 let frog = []
 let followers = []
-const [follow, setFollow] = useState([]);
-const [following, setFollowing] = useState([]);
-console.log('logged as on profile page', props.loggedAs)
+const [proFollow, setProFollow] = useState([]);
+const [proFollowing, setProFollowing] = useState([]);
+
+
 
 let thisGuy = props.userList.filter(brek =>
     brek.username === props.profilePage
     );
     console.log('youre on the page of: ', thisGuy)
 
-for (let i = 0; i < posts.length; i++) {
+    let posts2 = posts.filter(brek =>
+        brek.author === thisGuy[0].id
+        );
+        console.log('YOUR POSTS LOOK NOW: ', posts2)
+
+for (let i = 0; i < posts2.length; i++) {
     let dawg = props.userList.filter(guy =>
     guy.id === thisGuy[0].id
     );
     console.log('dawg', dawg)
-    frog.splice(0, 0, {name: dawg[0].screen_name, content: posts[i].text_content, pfp: dawg[0].profile_pic, username: dawg[0].username})
+    frog.splice(0, 0, {name: dawg[0].screen_name, content: posts2[i].text_content, pfp: dawg[0].profile_pic, username: dawg[0].username})
     //frog.splice(0, 0, content: posts[i].text_content)
         
 }
@@ -51,13 +57,13 @@ let baseURL = `https://8000-rdg97-projectredlineba-3mx4fceg9hi.ws-us77.gitpod.io
                 brek.followed === thisGuy[0].id
                 );
                 console.log('followers after filter', followers)
-                setFollow(followers)
+                setProFollow(followers)
             
             let followingg = followList.filter(brek =>
                 brek.follower === thisGuy[0].id
                 );
                 console.log('following after filter', followingg)
-                setFollowing(followingg)
+                setProFollowing(followingg)
 
 
 
@@ -81,9 +87,9 @@ let baseURL = `https://8000-rdg97-projectredlineba-3mx4fceg9hi.ws-us77.gitpod.io
                     <h3>{thisGuy[0].screen_name}</h3>
                     <h6>@{thisGuy[0].username}</h6>
                     <div class="btn-group-sm" role="group" aria-label="Basic outlined example">
-                        <button type="button" class="btn btn-outline-primary"> {follow.length} Followers</button>
+                        <button type="button" class="btn btn-outline-primary"> {proFollow.length} Followers</button>
                         <button type="button" class="btn btn-outline bg-light" onClick={followw} >Follow</button>
-                        <button type="button" class="btn btn-outline-primary">{following.length} Following</button>
+                        <button type="button" class="btn btn-outline-primary">{proFollowing.length} Following</button>
                         </div>
                     <br></br>
                     <p>{thisGuy[0].bio}</p>

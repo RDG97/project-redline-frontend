@@ -1,5 +1,15 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, state } from "react";
+import { GlobalProvider } from './context/GlobalState';
+import jwtDecode from "jwt-decode";
+import React from "react";
+import { Ref } from "react";
+
+import { Link } from "react-router-dom";
+import { useGlobalState } from "./context/GlobalState";
+import authService from "./services/auth.service";
+import App from "./App";
+
 
 
 
@@ -22,14 +32,29 @@ function goProfile(test) {
     props.setPage('profile')
     console.log('test:', test)
 }
+
 function likePost(postId) {
+    //if user has not liked post
+    //like filter where filters likes with this user and and this poster id. if the length is 0 send post request
+    let postlikes = liker.filter(guy =>
+        guy.liker === props.loggedAs.id && guy.post === postId
+    );
+    console.log('logged as id: ', props.loggedAs.id)
+    console.log('post likes looks like: ', postlikes)
+    if (postlikes.length === 0) {
     console.log('postID: ', postId)
     axios.post('https://8000-rdg97-projectredlineba-3mx4fceg9hi.ws-us77.gitpod.io/PostLikes/', {
     liker: props.loggedAs.id,
     post: postId
     })
+
+} else {
+    alert("youve already liked this post!!!");
+}
 }
 
+if (props.state.currentUser === null && props.state.currentUser === undefined || props.showAll === 'show following') {
+    console.log('running as tho no follower or not logged')
 for (let i = 0; i < posts.length; i++) {
     let meme = posts[i].author
     let dawg = props.userList.filter(guy =>
@@ -43,8 +68,50 @@ for (let i = 0; i < posts.length; i++) {
     console.log('dawg', dawg)
     frog.splice(0, 0, {id: posts[i].id, name: dawg[0].screen_name, content: posts[i].text_content, pfp: dawg[0].profile_pic, username: dawg[0].username, likes: liking.length})
     //frog.splice(0, 0, content: posts[i].text_content) 
+    }
+} else {
+
+    console.log('running as though have followers')
+    let loggedposts= []
+    console.log('FOLLWING', props.following)
+    let loggedFollows = props.following.filter(guy =>
+        guy.follower === props.loggedAs.id)
+        console.log('loggedfollows: ', loggedFollows)
+        for (let i = 0; i < loggedFollows.length; i++){
+            console.log('loggedfollows IN FOR LOOP: ', loggedFollows)
+        logger = props.data.filter(guy =>
+            guy.author === loggedFollows[i].followed)
+            console.log('logger', logger)
+        loggedposts.splice(0, 0, {id: logger[0].id, content: logger[0].text_content, author: logger[0].author})
+        
+        }
+        console.log('logger NOW', logger)
+
+        console.log('logged posts after filtering follows', loggedposts)
+    console.log('followed posts:  ', posts)
+    for (let i = 0; i < loggedposts.length; i++) {
+        let meme = loggedposts[i].author
+        let dawg = props.userList.filter(guy =>
+        guy.id === meme
+    );
+    let liking = liker.filter(brek =>
+        brek.post === posts[i].id
+        );
+    
+    console.log('dawg', dawg)
+    frog.splice(0, 0, {id: loggedposts[i].id, name: dawg[0].screen_name, content: loggedposts[i].content, pfp: dawg[0].profile_pic, username: dawg[0].username, likes: liking.length})
+    }
+    console.log('followers posts after filter (FROG)', frog)
 }
 
+
+function showem() {
+    if (props.showAll === 'show following') {
+    props.setShowAll('show all')
+    } else {
+        props.setShowAll('show following')
+    }
+}
 
 let auth = props.userList.filter(brek =>
     brek.id === fart
@@ -53,6 +120,9 @@ let auth = props.userList.filter(brek =>
     return (
         <>
         <div className='d-flex p-3 bg-primary text-white flex-fill '> <div className='container'><input class="form-control me-2 rounded" type="text" placeholder="Search"></input>
+
+        <button type="button" class="btn btn-primary" id="showAll" onClick={showem}>{props.showAll}</button>
+
         <br></br>
         <div className=" bg-warning border border-dark p-3">
 
