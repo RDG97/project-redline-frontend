@@ -2,6 +2,9 @@ import axios from "axios"
 export default function YourProfile(props) {
 let posts = props.data
 let frog = []
+let posts2 = posts.filter(brek =>
+  brek.author === props.loggedAs.id
+  );
 
 function test(props) {
     console.log('hahah poop')
@@ -29,12 +32,12 @@ let thisGuy = props.userList.filter(brek =>
     );
     console.log('youre on the page of: ', thisGuy)
 
-for (let i = 0; i < posts.length; i++) {
+for (let i = 0; i < posts2.length; i++) {
     let dawg = props.userList.filter(guy =>
     guy.id === thisGuy[0].id
     );
     console.log('dawg', dawg)
-    frog.splice(0, 0, {name: dawg[0].screen_name, content: posts[i].text_content, pfp: dawg[0].profile_pic, username: dawg[0].username})
+    frog.splice(0, 0, {name: dawg[0].screen_name, content: posts2[i].text_content, pfp: dawg[0].profile_pic, username: dawg[0].username})
     //frog.splice(0, 0, content: posts[i].text_content)
         
 }

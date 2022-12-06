@@ -25,7 +25,50 @@ export default function App(props) {
   const [userList, setUserList] = useState([]);
 
   const [Likes, setLikes] = useState([]);
+
+  const [following, setFollowing] = useState([]);
+
   const [test, setTest] = useState([]);
+
+  const [showAll, setShowAll] = useState('show following')
+
+  const [followers2, setFollowers2] = useState([])
+
+  const [following2, setFollowing2] = useState([])
+  
+  
+
+
+  useEffect(() => {
+    axios.get(`https://8000-rdg97-projectredlineba-3mx4fceg9hi.ws-us77.gitpod.io/Following/`).then((response) => {
+      const dataObj = response.data
+      let followList = dataObj;
+      console.log('follow list set! it looks like', followList)
+
+
+    let followerss = followList.filter(brek =>
+        brek.followed === props.loggedAs.id
+        );
+        console.log('followers after filter', followerss)
+        setFollowers2(followerss)
+
+    let followingg = followList.filter(brek =>
+        brek.follower === props.loggedAs.id
+        );
+        console.log('following after filter', followingg)
+        setFollowing2(followingg)
+        
+
+
+    })
+    .catch(function (error){
+    console.log('ERROR: ', error)
+    })
+    ;
+  }, []);
+
+
+
 
   useEffect(() => {
     axios.get(baseURL).then((response) => {
@@ -63,6 +106,34 @@ const userURL = 'https://8000-rdg97-projectredlineba-3mx4fceg9hi.ws-us77.gitpod.
     })
     ;
   }, [props, state]);
+  console.log('LOGGEDAS LOGGEDAS', loggedAs)
+let followList
+  useEffect(() => {
+    axios.get('https://8000-rdg97-projectredlineba-3mx4fceg9hi.ws-us77.gitpod.io/Following/').then((response) => {
+      const dataObj = response.data
+      setFollowing(dataObj);
+      
+
+
+
+
+
+
+    })
+    .catch(function (error){
+    console.log('ERROR: ', error)
+    })
+    ;
+  }, [props, state]);
+
+
+
+
+
+
+  let loggedFollows = following.filter(guy =>
+    guy.follower === loggedAs.id)
+    console.log('logged followers', loggedFollows)
 
   if (state.currentUser != null && state.currentUser != undefined) {
     const getbaseURL = `https://8000-rdg97-projectredlineba-3mx4fceg9hi.ws-us77.gitpod.io/Users/${state.currentUser.user_id}`
@@ -100,18 +171,24 @@ async function getSomeDataFromBackend() {
 }
   
   console.log('data: ', data)
+  
   if (data.length === 0) return <div className="loading fw-bold text-warning fs-3">Loading please be patient... we are trying our best</div>;
+  
   return (
     <GlobalProvider>
       <div id='App' className='d-flex p-3 bg-secondary text-white'>
         <LeftDiv data={data} userList={userList} page={page} setPage={setPage} loggedAs={loggedAs} profilePage={profilePage} setProfilePage={setProfilePage} likes={Likes} setLikes={setLikes}/>
-        { page == 'home' && <Home test={test} setTest={setTest} data={data} userList={userList} page={page} setPage={setPage} loggedAs={loggedAs} profilePage={profilePage} setProfilePage={setProfilePage} Likes={Likes} setLikes={setLikes}/>}
+        { page == 'home' && <Home showAll={showAll} setShowAll={setShowAll} following={following}test={test} setTest={setTest} state={state} data={data} userList={userList} page={page} setPage={setPage} loggedAs={loggedAs} profilePage={profilePage} setProfilePage={setProfilePage} Likes={Likes} setLikes={setLikes}/>}
         { page == 'makepost' && <MakePost setPage={setPage} loggedAs={loggedAs} likes={Likes} setLikes={setLikes}/>}
         {page == 'profile' && <Profile data={data} userList={userList} page={page} setPage={setPage} loggedAs={loggedAs} profilePage={profilePage} setProfilePage={setProfilePage} likes={Likes} setLikes={setLikes}/>}
         {page == 'yourprofile' && <YourProfile data={data} userList={userList} page={page} setPage={setPage} loggedAs={loggedAs} profilePage={profilePage} setProfilePage={setProfilePage} likes={Likes} setLikes={setLikes}/>}
-        <AccountPage pdata={data} userList={userList} page={page} setPage={setPage} loggedAs={loggedAs} profilePage={profilePage} setProfilePage={setProfilePage} likes={Likes} setLikes={setLikes}/>
+        
+        <AccountPage data={data} userList={userList} page={page} setPage={setPage} following2={following2} followers2={followers2} setFollowing2={setFollowing2} setFollowers2={setFollowers2} loggedAs={loggedAs} profilePage={profilePage} setProfilePage={setProfilePage} likes={Likes} setLikes={setLikes}/>
+      
+
       </div>
     </GlobalProvider>
+    
   );
 
 }
