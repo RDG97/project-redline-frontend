@@ -114,9 +114,9 @@ console.log('FOLLOWING DATA 2', props.following)
 
     return (
       
-        <div className='d-flex p-3 bg-warning text-white asside d-none d-lg-block'>
+        <div className='d-flex p-3 greyback text-white asside d-none d-lg-block'>
 
-        <div className='container-fluid bg-light border text-dark'>
+        <div className='container-fluid greyback text-light rounded'>
 
 
 
@@ -136,11 +136,11 @@ console.log('FOLLOWING DATA 2', props.following)
             <>
             <div className='border pfp bg-secondary rounded-pill'><img src={props.loggedAs.profile_pic} className="pfp rounded-pill border"></img></div>
               <h3>{props.loggedAs.screen_name}</h3>
-              <h6 className="text-primary" onClick={() => {props.setProfilePage(props.loggedAs.username); props.setPage('yourprofile')}}>@{props.loggedAs.username}</h6>
+              <h6 className="text-redline" onClick={() => {props.setProfilePage(props.loggedAs.username); props.setPage('yourprofile')}}>@{props.loggedAs.username}</h6>
               <div class="btn-group-sm" role="group" aria-label="Basic outlined example">
-                        <button type="button" class="btn btn-outline-primary"> {0} Followers</button>
+                        <button type="button" class="btn btn-outline-danger "> {0} Followers</button>
                         
-                        <button type="button" class="btn btn-outline-primary">{0} Following</button>
+                        <button type="button" class="btn btn-outline-danger">{0} Following</button>
                         </div>
               <a class="btn btn-primary"  onClick={logout} role="button">Log Out</a>
               <button type="button" class="btn btn-primary" onClick={postview} data-bs-target="#loginBackdrop">
@@ -156,7 +156,7 @@ console.log('FOLLOWING DATA 2', props.following)
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalToggleLabel">Register</h5>
+        <h5 class="modal-title text-dark" id="exampleModalToggleLabel">Register</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
 
@@ -189,7 +189,7 @@ console.log('FOLLOWING DATA 2', props.following)
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalToggleLabel2">A few more details...</h5>
+        <h5 class="modal-title text-dark" id="exampleModalToggleLabel2">A few more details...</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -211,7 +211,7 @@ console.log('FOLLOWING DATA 2', props.following)
                             <input type="text" class="form-control email" placeholder="Email" id="email"></input>
                           </div>
                           <div>
-                          <input type="checkbox" class="expl" id="expl" name="expl" value="1"></input>
+                          <input type="checkbox" class="expl text-dark" id="expl" name="expl" value="1"></input>
                           <label for="expl">  filter explicit content?</label>
                           </div>
       </form>

@@ -52,7 +52,7 @@ function likePost(postId) {
     alert("youve already liked this post!!!");
 }
 }
-
+let logger
 if (props.state.currentUser === null && props.state.currentUser === undefined || props.showAll === 'show following') {
     console.log('running as tho no follower or not logged')
 for (let i = 0; i < posts.length; i++) {
@@ -65,13 +65,13 @@ for (let i = 0; i < posts.length; i++) {
         brek.post === posts[i].id
         );
     
-    console.log('dawg', dawg)
+    
     frog.splice(0, 0, {id: posts[i].id, name: dawg[0].screen_name, content: posts[i].text_content, pfp: dawg[0].profile_pic, username: dawg[0].username, likes: liking.length})
     //frog.splice(0, 0, content: posts[i].text_content) 
     }
 } else {
 
-    console.log('running as though have followers')
+
     let loggedposts= []
     console.log('FOLLWING', props.following)
     let loggedFollows = props.following.filter(guy =>
@@ -85,10 +85,7 @@ for (let i = 0; i < posts.length; i++) {
         loggedposts.splice(0, 0, {id: logger[0].id, content: logger[0].text_content, author: logger[0].author})
         
         }
-        console.log('logger NOW', logger)
 
-        console.log('logged posts after filtering follows', loggedposts)
-    console.log('followed posts:  ', posts)
     for (let i = 0; i < loggedposts.length; i++) {
         let meme = loggedposts[i].author
         let dawg = props.userList.filter(guy =>
@@ -98,11 +95,12 @@ for (let i = 0; i < posts.length; i++) {
         brek.post === posts[i].id
         );
     
-    console.log('dawg', dawg)
+    
     frog.splice(0, 0, {id: loggedposts[i].id, name: dawg[0].screen_name, content: loggedposts[i].content, pfp: dawg[0].profile_pic, username: dawg[0].username, likes: liking.length})
     }
-    console.log('followers posts after filter (FROG)', frog)
+    
 }
+
 
 
 function showem() {
@@ -119,20 +117,20 @@ let auth = props.userList.filter(brek =>
 
     return (
         <>
-        <div className='d-flex p-3 bg-primary text-white flex-fill '> <div className='container'><input class="form-control me-2 rounded" type="text" placeholder="Search"></input>
+        <div className='d-flex p-3 home greyback text-white flex-fill '> <div className='container'><input class="form-control me-2 rounded" type="text" placeholder="Search"></input>
 
         <button type="button" class="btn btn-primary" id="showAll" onClick={showem}>{props.showAll}</button>
 
         <br></br>
-        <div className=" bg-warning border border-dark p-3">
+        <div className="greyback border border-dark p-3">
 
         {frog.map(product => (
-            <div className=" bg-warning border border-dark p-3">
+            <div className="greyback border border-dark p-3">
                 <div className="d-flex"> 
             <img src={product.pfp}  style={{height: 60, width: 60}} className="pfp rounded-pill border"></img>
             <div className="row"> 
             <h3>{product.name}</h3>
-            <p className="text-primary" onClick={() => {props.setProfilePage(product.username); props.setPage('profile')}} >@{product.username}</p>
+            <p className="text-redline" onClick={() => {props.setProfilePage(product.username); props.setPage('profile')}} >@{product.username}</p>
             </div>
             </div>
             <h6>{product.content}</h6>

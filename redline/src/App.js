@@ -9,6 +9,8 @@ import { useGlobalState } from './context/GlobalState';
 import { GlobalProvider } from './context/GlobalState';
 import MakePost from './MakePost';
 import YourProfile from './YourProfile';
+import CarView from './Carview';
+import NextCar from './NextCar';
 
 export default function App(props) {
   const [data, setData] = useState([]);
@@ -22,6 +24,8 @@ export default function App(props) {
 
   const [page, setPage] = useState("home")
 
+  const [leftPage, setLeftPage] = useState("default")
+
   const [userList, setUserList] = useState([]);
 
   const [Likes, setLikes] = useState([]);
@@ -30,13 +34,15 @@ export default function App(props) {
 
   const [test, setTest] = useState([]);
 
-  const [showAll, setShowAll] = useState('show following')
+  const [showAll, setShowAll] = useState('show following');
 
-  const [followers2, setFollowers2] = useState([])
+  const [followers2, setFollowers2] = useState([]);
 
-  const [following2, setFollowing2] = useState([])
+  const [following2, setFollowing2] = useState([]);
+
+  const [car, setCar] = useState([]);
   
-  
+//https://www.carqueryapi.com/api/0.3/?callback=?&cmd=getTrims&make=ford&model=fiesta&year=2014 example API call
 
 
   useEffect(() => {
@@ -177,7 +183,9 @@ async function getSomeDataFromBackend() {
   return (
     <GlobalProvider>
       <div id='App' className='d-flex p-3 bg-secondary text-white'>
-        <LeftDiv data={data} userList={userList} page={page} setPage={setPage} loggedAs={loggedAs} profilePage={profilePage} setProfilePage={setProfilePage} likes={Likes} setLikes={setLikes}/>
+        { leftPage == 'default' && <LeftDiv data={data} leftPage={leftPage}  setLeftPage={setLeftPage} userList={userList} page={page} setPage={setPage} loggedAs={loggedAs} profilePage={profilePage} setProfilePage={setProfilePage} likes={Likes} setLikes={setLikes}/>}
+        { leftPage == 'nextcar' && <NextCar data={data} car={car} setCar={setCar} leftPage={leftPage} setLeftPage={setLeftPage} userList={userList} page={page} setPage={setPage} loggedAs={loggedAs} profilePage={profilePage} setProfilePage={setProfilePage} likes={Likes} setLikes={setLikes}/>}
+        { leftPage == 'car' && <CarView data={data} car={car} setCar={setCar} leftPage={leftPage} setLeftPage={setLeftPage} userList={userList} page={page} setPage={setPage} loggedAs={loggedAs} profilePage={profilePage} setProfilePage={setProfilePage} likes={Likes} setLikes={setLikes}/>}
         { page == 'home' && <Home showAll={showAll} setShowAll={setShowAll} following={following}test={test} setTest={setTest} state={state} data={data} userList={userList} page={page} setPage={setPage} loggedAs={loggedAs} profilePage={profilePage} setProfilePage={setProfilePage} Likes={Likes} setLikes={setLikes}/>}
         { page == 'makepost' && <MakePost setPage={setPage} loggedAs={loggedAs} likes={Likes} setLikes={setLikes}/>}
         {page == 'profile' && <Profile data={data} userList={userList} page={page} setPage={setPage} loggedAs={loggedAs} profilePage={profilePage} setProfilePage={setProfilePage} likes={Likes} setLikes={setLikes}/>}

@@ -86,6 +86,7 @@ for (let i = 0; i < posts2.length; i++) {
                 <div className="row p-3">
                     <h3>{thisGuy[0].screen_name}</h3><h6 className="text-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Edit</h6>
                     <h6>@{thisGuy[0].username}</h6>
+                    <p></p>
                     <div class="btn-group-sm" role="group" aria-label="Basic outlined example">
                         <button type="button" class="btn btn-outline-primary">0 Followers</button>
                         <button type="button" class="btn btn-outline-primary">0 Following</button>

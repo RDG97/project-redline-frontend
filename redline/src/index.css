@@ -21,9 +21,15 @@ code {
   height: 50px;
 }
 
-#testa {
-  
-  z-index:0;
-
+.greyback {
+  background-color: #606060;
 }
 
+.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+  background-color: #A83731 !important;
+  border-color: #A83731 !important;
+}
+
+.text-redline {
+  color: #A83731 !important;
+}

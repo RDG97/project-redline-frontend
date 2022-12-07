@@ -30,7 +30,7 @@ export default function MakePost(props) {
         }
 
     return (
-        <div className='d-flex p-3 bg-primary text-white flex-fill text-center'>
+        <div className='d-flex p-3 greyback text-white flex-fill text-center'>
             <center>
             <h3>Hello, {props.loggedAs.screen_name}! Lets post something.</h3>
             <form>

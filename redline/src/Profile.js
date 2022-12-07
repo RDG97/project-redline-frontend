@@ -25,7 +25,7 @@ for (let i = 0; i < posts2.length; i++) {
     let dawg = props.userList.filter(guy =>
     guy.id === thisGuy[0].id
     );
-    console.log('dawg', dawg)
+    
     frog.splice(0, 0, {name: dawg[0].screen_name, content: posts2[i].text_content, pfp: dawg[0].profile_pic, username: dawg[0].username})
     //frog.splice(0, 0, content: posts[i].text_content)
         
@@ -78,8 +78,8 @@ let baseURL = `https://8000-rdg97-projectredlineba-3mx4fceg9hi.ws-us77.gitpod.io
 
     return(
         <>
-        <div className='flex-row p-3 bg-primary text-white flex-fill '>
-            <div className="d-flex bg-danger text-white flex-fill">
+        <div className='flex-row p-3 greyback text-white flex-fill '>
+            <div className="d-flex greyback text-white flex-fill">
                 <div className="d-flex">
 
                 <img src={thisGuy[0].profile_pic} style={{height: 100, width: 100}} className="rounded-pill border"></img>
@@ -102,9 +102,9 @@ let baseURL = `https://8000-rdg97-projectredlineba-3mx4fceg9hi.ws-us77.gitpod.io
 
         
         <br></br>
-        <div className="flex-row bg-warning border border-dark p-3 ">
+        <div className="flex-row greyback border border-dark p-3 ">
                     {frog.map(product => (
-                        <div className=" bg-warning border border-dark p-3">
+                        <div className=" greyback border border-dark p-3">
                             <div className="d-flex"> 
                         <img src={product.pfp}  style={{height: 60, width: 60}} className="pfp rounded-pill border"></img>
                         <div className="row"> 
