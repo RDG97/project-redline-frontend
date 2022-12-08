@@ -32,7 +32,7 @@ for (let i = 0; i < posts2.length; i++) {
 }
 
 function followw() {
-    axios.post('https://8000-rdg97-projectredlineba-3mx4fceg9hi.ws-us77.gitpod.io/Following/', {
+    axios.post('https://8000-rdg97-projectredlineba-3mx4fceg9hi.ws-us78.gitpod.io/Following/', {
         follower: props.loggedAs.id,
         followed: thisGuy[0].id
           })
@@ -44,7 +44,7 @@ function followw() {
           });
         }
 
-let baseURL = `https://8000-rdg97-projectredlineba-3mx4fceg9hi.ws-us77.gitpod.io/Following/`
+let baseURL = `https://8000-rdg97-projectredlineba-3mx4fceg9hi.ws-us78.gitpod.io/Following/`
 
         useEffect(() => {
             axios.get(baseURL).then((response) => {

@@ -80,7 +80,7 @@ setTimeout(() => { window.location.reload()}, "200")
     } else {console.log('passwords ARE the same... good job bud')}
     console.log('pfpvalue', pfp.value)
 
-    axios.post('https://8000-rdg97-projectredlineba-3mx4fceg9hi.ws-us77.gitpod.io/Users/', {
+    axios.post('https://8000-rdg97-projectredlineba-3mx4fceg9hi.ws-us78.gitpod.io/Users/', {
       filter_explicit: expl,
       screen_name: sname.value,
       bio: bio.value,

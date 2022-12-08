@@ -14,7 +14,7 @@ export default function MakePost(props) {
           console.log('explicit content left on!')
           expl = 0
         } 
-        axios.post('https://8000-rdg97-projectredlineba-3mx4fceg9hi.ws-us77.gitpod.io/Posts/', {
+        axios.post('https://8000-rdg97-projectredlineba-3mx4fceg9hi.ws-us78.gitpod.io/Posts/', {
         author: author,
         text_content: content,
         explicit: expl

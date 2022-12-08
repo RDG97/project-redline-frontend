@@ -12,7 +12,7 @@ function test(props) {
     let bio = document.getElementById('bio').value
     let sname = document.getElementById('sname').value
     console.log('sname value', sname)
-    axios.patch(`https://8000-rdg97-projectredlineba-3mx4fceg9hi.ws-us77.gitpod.io/Users/${thisGuy[0].id}`, {
+    axios.patch(`https://8000-rdg97-projectredlineba-3mx4fceg9hi.ws-us78.gitpod.io/Users/${thisGuy[0].id}`, {
         screen_name: sname.value,
         bio: bio.value,
         profile_pic: pfp.value
