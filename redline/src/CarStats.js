@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import {
   Chart as ChartJS,
   RadialLinearScale,
@@ -12,10 +13,42 @@ import { Radar } from 'react-chartjs-2';
 import { createBrowserHistory } from '@remix-run/router';
 import { max } from 'lodash';
 
+
 export default function CarStats(props) {
     function homeview() {
         props.setPage('home')
     }
+
+    function addCar() {
+      console.log('hehe')
+      let nickname = document.getElementById('nick').value
+      console.log('nickname value looks like', nickname)
+      axios.post('https://8000-rdg97-projectredlineba-3mx4fceg9hi.ws-us78.gitpod.io/Vehicles/', {
+        owner: props.loggedAs.id,
+        nickname: nickname,
+        car_year: props.userCar[0].model_year,
+        car_make: props.userCar[0].model_make_display,
+        car_model: props.userCar[0].model_name,
+        car_trim: props.userCar[0].model_trim,
+        weight: curWeight,
+        powercc: curCC,
+        lkm: curLKM,
+        powerps: curPS,
+        torque: curTorque,
+        compression: curComp
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    }
+
+    function home() {
+      props.setLeftPage('default')
+    }
+
 
     function car() {
         console.log(props.userCar)
@@ -28,23 +61,29 @@ export default function CarStats(props) {
     let maxTorque = 290
     let maxComp = 8.2
 
-    let curCC = props.userCar[0].model_engine_cc
-    let curWeight = props.userCar[0].model_weight_kg
-    let curLKM = props.userCar[0].model_lkm_mixed
-    let curPS = props.userCar[0].model_engine_power_ps
-    let curTorque = props.userCar[0].model_engine_torque_nm
-    let curComp = props.userCar[0].model_engine_compression
+    let curCC 
+    if (props.userCar[0].model_engine_cc != Number) {curCC = 1000} else {curCC = props.userCar[0].model_engine_cc}
+    let curWeight 
+    if (props.userCar[0].model_weight_kg != Number) {curWeight = 1000} else {curWeight = props.userCar[0].model_weight_kg}
+    let curLKM 
+    if (props.userCar[0].model_lkm_mixed != Number) {curLKM = 8} else {curLKM = props.userCar[0].model_lkm_mixed}
+    let curPS
+    if (props.userCar[0].model_engine_power_ps != Number) {curPS = 203} else {curPS = props.userCar[0].model_engine_power_ps}
+    let curTorque
+    if (props.userCar[0].model_engine_torque_nm != Number) {curTorque = 150} else {curTorque = props.userCar[0].model_engine_torque_nm}
+    let curComp 
+    if (props.userCar[0].model_engine_compression != Number) {curComp = 5} else {curComp = props.userCar[0].model_engine_compression}
+   console.log('CURRENT LKM', curLKM)
 
-    let dispCC = ((maxCC - curCC) / 100)
-    let dispWeight = ((maxWeight - curWeight) / 100)
-    let dispLKM = ((maxLKM - curLKM) / 100)
-    let dispPS = ((maxPS - curPS) / 100)
-    let dispTorque = ((maxTorque - curTorque) / 100)
-    let dispComp = ((maxComp - curComp) / 100)
+    let dispCC = ((100 * curCC) / maxCC)
+    let dispWeight = ((100 * curWeight) / maxWeight)
+    let dispLKM = ((100 * curLKM) / maxLKM)
+    let dispPS = ((100 * curPS) / maxPS)
+    let dispTorque = ((100 * curTorque) / maxTorque)
+    let dispComp = ((100 * curComp) / maxComp)
 
-
-    console.log('USERCAR FROM STATS', props.userCar)
-    console.log('DISP CC OH GOD PLEASE WORK', dispCC)
+  
+    console.log('CAR USESTATE CAR USESTATE', props.car)
     console.log('Weight', dispWeight, 'power (CC)', dispCC, 'MPG', dispLKM, 'power (PS)', dispPS, 'torque', dispTorque, 'compression', dispComp)
     ChartJS.register(
         RadialLinearScale,
@@ -75,6 +114,19 @@ export default function CarStats(props) {
             <div className='d-flex bg-light rounded'>
             <Radar data={data} />
             </div>
-        </div>
+
+            <button type="button" class="btn btn-primary" onClick={home}>Home</button>
+            <form>
+              <div class="input-group">
+              <button type="button" class="btn btn-primary" onClick={addCar}>Add this car</button>
+              </div>
+              <div class="input-group">
+                <input type="input" class="form-control pass2" placeholder="enter nickname" id='nick'></input>
+              </div>
+        </form>
+      </div>
+      
+      
+
     )
 }

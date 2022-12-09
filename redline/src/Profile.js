@@ -1,5 +1,15 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import {
+    Chart as ChartJS,
+    RadialLinearScale,
+    PointElement,
+    LineElement,
+    Filler,
+    Tooltip,
+    Legend,
+  } from 'chart.js';
+  import { Radar } from 'react-chartjs-2';
 
 
 export default function Profile(props) {
@@ -8,6 +18,8 @@ let frog = []
 let followers = []
 const [proFollow, setProFollow] = useState([]);
 const [proFollowing, setProFollowing] = useState([]);
+
+
 
 
 
@@ -30,6 +42,13 @@ for (let i = 0; i < posts2.length; i++) {
     //frog.splice(0, 0, content: posts[i].text_content)
         
 }
+
+let thisCar = props.carList.filter(guy =>
+    guy.owner === thisGuy[0].id
+    );
+console.log('THIS GUYS CAR. HELP PLEASE', thisCar)
+
+
 
 function followw() {
     axios.post('https://8000-rdg97-projectredlineba-3mx4fceg9hi.ws-us78.gitpod.io/Following/', {
@@ -74,6 +93,71 @@ let baseURL = `https://8000-rdg97-projectredlineba-3mx4fceg9hi.ws-us78.gitpod.io
             ;
           }, []);
 
+          let maxCC = 2500  
+          let maxWeight = 3135
+          let maxLKM = 19
+          let maxPS = 305
+          let maxTorque = 290
+          let maxComp = 8.2 
+
+
+    
+
+
+
+
+
+let stats
+          if (thisCar.length > 0) {
+            let dispCC = ((100 * thisCar[0].powercc) / maxCC)
+            let dispWeight = ((100 * thisCar[0].weight) / maxWeight)
+            let dispLKM = ((100 * thisCar[0].lkm) / maxLKM)
+            let dispPS = ((100 * thisCar[0].powerps) / maxPS)
+            let dispTorque = ((100 * thisCar[0].torque) / maxTorque)
+            let dispComp = ((100 * thisCar[0].compression) / maxComp)
+  
+  
+  
+  
+  
+            ChartJS.register(
+              RadialLinearScale,
+              PointElement,
+              LineElement,
+              Filler,
+              Tooltip,
+              Legend
+            );
+            
+            const data = {
+              labels: ['Weight', 'power (CC)', 'MPG', 'power (PS)', 'torque', 'compression'],
+              datasets: [
+                {
+                  label: 'Car Stats',
+                  data: [dispWeight, dispCC, dispLKM, dispPS, dispTorque, dispComp],
+                  backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                  borderColor: 'rgba(255, 99, 132, 1)',
+                  borderWidth: 1,
+                },
+              ],
+          };
+            stats = <div className='row bg-light rounded' >
+                    <div className="d-flex text-light stats">
+                      <div className="row text-center">
+                    <h1 className="text-dark">{thisCar[0].car_make} {thisCar[0].car_model} </h1>
+                    <h4 className="text-dark">{thisCar[0].car_trim}</h4>
+                    </div>
+                    <Radar className="text-light" data={data} />
+                    </div>
+                    </div>
+          } else {
+            stats = <h1>prefers to walk. (no cars saved)</h1>;
+          }
+
+
+
+
+
 
 
     return(
@@ -93,6 +177,7 @@ let baseURL = `https://8000-rdg97-projectredlineba-3mx4fceg9hi.ws-us78.gitpod.io
                         </div>
                     <br></br>
                     <p>{thisGuy[0].bio}</p>
+                    {stats}
                 </div>
 
 

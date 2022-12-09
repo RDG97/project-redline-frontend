@@ -46,7 +46,7 @@ function carsetter() {
         }
 
         console.log('TRIMS', trims)
-        return <button key={id} id={model} className="bg-danger text-light" onClick={meme}>{trims}</button>
+        return <button key={id} id={model} className="btn-primary " data-bs-toggle="button" autocomplete="off" onClick={meme}>{trims}</button>
         
     })
   });

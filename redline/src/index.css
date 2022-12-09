@@ -33,3 +33,8 @@ code {
 .text-redline {
   color: #A83731 !important;
 }
+
+.stats {
+  height: 400px;
+  width: 200px;
+}

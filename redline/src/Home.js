@@ -34,7 +34,7 @@ function goProfile(test) {
 }
 
 function likePost(postId) {
-    //if user has not liked post
+
     //like filter where filters likes with this user and and this poster id. if the length is 0 send post request
     let postlikes = liker.filter(guy =>
         guy.liker === props.loggedAs.id && guy.post === postId
@@ -47,7 +47,8 @@ function likePost(postId) {
     liker: props.loggedAs.id,
     post: postId
     })
-
+    const btn = document.querySelector('.btn-primary like');
+    btn.disabled = true;
 } else {
     alert("youve already liked this post!!!");
 }
@@ -134,7 +135,7 @@ let auth = props.userList.filter(brek =>
             </div>
             </div>
             <h6>{product.content}</h6>
-            <button type="button" class="btn btn-primary" onClick={() => {likePost(product.id); props.setProfilePage(product.username)}}>
+            <button type="button" class="btn btn-primary like" onClick={() => {likePost(product.id); props.setProfilePage(product.username)}}>
                 {product.likes} Likes
             </button>
             </div>

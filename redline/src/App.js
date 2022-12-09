@@ -42,7 +42,10 @@ export default function App(props) {
   const [following2, setFollowing2] = useState([]);
 
   const [car, setCar] = useState([]);
+
   const [userCar, setUserCar] = useState([])
+
+  const [carList, setCarList] = useState([])
   
 //https://www.carqueryapi.com/api/0.3/?callback=?&cmd=getTrims&make=ford&model=fiesta&year=2014 example API call
 
@@ -89,6 +92,19 @@ export default function App(props) {
     })
     ;
   }, []);
+
+  useEffect(() => {
+    axios.get('https://8000-rdg97-projectredlineba-3mx4fceg9hi.ws-us78.gitpod.io/Vehicles/').then((response) => {
+      const dataObj = response.data
+      setCarList(dataObj);
+      console.log('CAR LIST set! it looks like', dataObj)
+    })
+    .catch(function (error){
+    console.log('ERROR: ', error)
+    })
+    ;
+  }, []);
+
 const userURL = 'https://8000-rdg97-projectredlineba-3mx4fceg9hi.ws-us78.gitpod.io/Users/'
 
   useEffect(() => {
@@ -191,7 +207,7 @@ async function getSomeDataFromBackend() {
         { leftPage == 'car' && <CarView data={data} car={car} setCar={setCar} leftPage={leftPage} setLeftPage={setLeftPage} userList={userList} page={page} setPage={setPage} loggedAs={loggedAs} profilePage={profilePage} setProfilePage={setProfilePage} likes={Likes} setLikes={setLikes}/>}
         { page == 'home' && <Home showAll={showAll} setShowAll={setShowAll} following={following}test={test} setTest={setTest} state={state} data={data} userList={userList} page={page} setPage={setPage} loggedAs={loggedAs} profilePage={profilePage} setProfilePage={setProfilePage} Likes={Likes} setLikes={setLikes}/>}
         { page == 'makepost' && <MakePost setPage={setPage} loggedAs={loggedAs} likes={Likes} setLikes={setLikes}/>}
-        {page == 'profile' && <Profile data={data} userList={userList} page={page} setPage={setPage} loggedAs={loggedAs} profilePage={profilePage} setProfilePage={setProfilePage} likes={Likes} setLikes={setLikes}/>}
+        {page == 'profile' && <Profile carList={carList} setCarList={setCarList} data={data} userList={userList} page={page} setPage={setPage} loggedAs={loggedAs} profilePage={profilePage} setProfilePage={setProfilePage} likes={Likes} setLikes={setLikes}/>}
         {page == 'yourprofile' && <YourProfile data={data} userList={userList} page={page} setPage={setPage} loggedAs={loggedAs} profilePage={profilePage} setProfilePage={setProfilePage} likes={Likes} setLikes={setLikes}/>}
         
         <AccountPage data={data} userList={userList} page={page} setPage={setPage} following2={following2} followers2={followers2} setFollowing2={setFollowing2} setFollowers2={setFollowers2} loggedAs={loggedAs} profilePage={profilePage} setProfilePage={setProfilePage} likes={Likes} setLikes={setLikes}/>

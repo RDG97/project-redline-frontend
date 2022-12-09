@@ -78,8 +78,8 @@ for (let i = 0; i < posts2.length; i++) {
     </div>
   </div>
 </div>
-        <div className='flex-row p-3 bg-primary text-white flex-fill '>
-            <div className="d-flex bg-danger text-white flex-fill">
+        <div className='flex-row p-3 greyback text-white flex-fill '>
+            <div className="d-flex greyback text-white flex-fill">
                 <div className="d-flex">
 
                 <img src={thisGuy[0].profile_pic} style={{height: 100, width: 100}} className="rounded-pill border"></img>
@@ -102,9 +102,9 @@ for (let i = 0; i < posts2.length; i++) {
 
         
         <br></br>
-        <div className="flex-row bg-warning border border-dark p-3 ">
+        <div className="flex-row greyback border border-dark p-3 ">
                     {frog.map(product => (
-                        <div className=" bg-warning border border-dark p-3">
+                        <div className="greyback border border-dark p-3">
                             <div className="d-flex"> 
                         <img src={product.pfp}  style={{height: 60, width: 60}} className="pfp rounded-pill border"></img>
                         <div className="row"> 
