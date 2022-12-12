@@ -19,6 +19,7 @@ export default function AccountPage(props) {
   const [ state, dispatch ] = useGlobalState(); 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [proFollow, setProFollow] = useState([])
 
 
 
@@ -47,7 +48,7 @@ export default function AccountPage(props) {
 
 
 handleLogin(lusername,lpassword)
-setTimeout(() => { window.location.reload()}, "200")
+setTimeout(() => { window.location.reload()}, "400")
   }
 
 
@@ -80,7 +81,7 @@ setTimeout(() => { window.location.reload()}, "200")
     } else {console.log('passwords ARE the same... good job bud')}
     console.log('pfpvalue', pfp.value)
 
-    axios.post('https://8000-rdg97-projectredlineba-3mx4fceg9hi.ws-us77.gitpod.io/Users/', {
+    axios.post('https://8000-rdg97-projectredlineba-3mx4fceg9hi.ws-us78.gitpod.io/Users/', {
       filter_explicit: expl,
       screen_name: sname.value,
       bio: bio.value,
@@ -107,16 +108,25 @@ function postview() {
 }
 
 
-let following = props.following
-let followers = props.followers
+let followList = props.following
+
 console.log('FOLLOWING DATA 2', props.following)
+
+
+
+
+
+
+
+
+
 
 
     return (
       
-        <div className='d-flex p-3 bg-warning text-white asside d-none d-lg-block'>
+        <div className='d-flex p-3 greyback text-white asside d-none d-lg-block'>
 
-        <div className='container-fluid bg-light border text-dark'>
+        <div className='container-fluid greyback text-light rounded'>
 
 
 
@@ -124,7 +134,7 @@ console.log('FOLLOWING DATA 2', props.following)
           !state.currentUser && (
             <>
             <p>you arent signed in!</p>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginBackdrop">
+            <button type="button" class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#loginBackdrop">
                 Log in
             </button>
 
@@ -136,13 +146,13 @@ console.log('FOLLOWING DATA 2', props.following)
             <>
             <div className='border pfp bg-secondary rounded-pill'><img src={props.loggedAs.profile_pic} className="pfp rounded-pill border"></img></div>
               <h3>{props.loggedAs.screen_name}</h3>
-              <h6 className="text-primary" onClick={() => {props.setProfilePage(props.loggedAs.username); props.setPage('yourprofile')}}>@{props.loggedAs.username}</h6>
+              <h6 className="text-redline" onClick={() => {props.setProfilePage(props.loggedAs.username); props.setPage('yourprofile')}}>@{props.loggedAs.username}</h6>
               <div class="btn-group-sm" role="group" aria-label="Basic outlined example">
-                        <button type="button" class="btn btn-outline-primary"> {0} Followers</button>
+                        <button type="button" class="btn btn-outline-danger "> {0} Followers</button>
                         
-                        <button type="button" class="btn btn-outline-primary">{0} Following</button>
+                        <button type="button" class="btn btn-outline-danger">{0} Following</button>
                         </div>
-              <a class="btn btn-primary"  onClick={logout} role="button">Log Out</a>
+              <a class="btn btn-primary mx-1"  onClick={logout} role="button">Log Out</a>
               <button type="button" class="btn btn-primary" onClick={postview} data-bs-target="#loginBackdrop">
                 Make a post
             </button>
@@ -156,7 +166,7 @@ console.log('FOLLOWING DATA 2', props.following)
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalToggleLabel">Register</h5>
+        <h5 class="modal-title text-dark" id="exampleModalToggleLabel">Register</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
 
@@ -189,7 +199,7 @@ console.log('FOLLOWING DATA 2', props.following)
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalToggleLabel2">A few more details...</h5>
+        <h5 class="modal-title text-dark" id="exampleModalToggleLabel2">A few more details...</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -211,7 +221,7 @@ console.log('FOLLOWING DATA 2', props.following)
                             <input type="text" class="form-control email" placeholder="Email" id="email"></input>
                           </div>
                           <div>
-                          <input type="checkbox" class="expl" id="expl" name="expl" value="1"></input>
+                          <input type="checkbox" class="expl text-dark" id="expl" name="expl" value="1"></input>
                           <label for="expl">  filter explicit content?</label>
                           </div>
       </form>

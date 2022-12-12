@@ -1,4 +1,5 @@
 import axios from "axios"
+import heart from '/workspace/project-redline-frontend/redline/src/img/heart.png'
 export default function YourProfile(props) {
 let posts = props.data
 let frog = []
@@ -12,7 +13,7 @@ function test(props) {
     let bio = document.getElementById('bio').value
     let sname = document.getElementById('sname').value
     console.log('sname value', sname)
-    axios.patch(`https://8000-rdg97-projectredlineba-3mx4fceg9hi.ws-us77.gitpod.io/Users/${thisGuy[0].id}`, {
+    axios.patch(`https://8000-rdg97-projectredlineba-3mx4fceg9hi.ws-us78.gitpod.io/Users/${thisGuy[0].id}`, {
         screen_name: sname.value,
         bio: bio.value,
         profile_pic: pfp.value
@@ -72,23 +73,24 @@ for (let i = 0; i < posts2.length; i++) {
       </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary" onClick={test}>Save changes</button>
       </div>
     </div>
   </div>
 </div>
-        <div className='flex-row p-3 bg-primary text-white flex-fill '>
-            <div className="d-flex bg-danger text-white flex-fill">
+        <div className='flex-row p-3 greyback text-white flex-fill '>
+            <div className="d-flex greyback text-white flex-fill">
                 <div className="d-flex">
 
                 <img src={thisGuy[0].profile_pic} style={{height: 100, width: 100}} className="rounded-pill border"></img>
                 <div className="row p-3">
                     <h3>{thisGuy[0].screen_name}</h3><h6 className="text-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Edit</h6>
-                    <h6>@{thisGuy[0].username}</h6>
+                    <h6 className="text-redline">@{thisGuy[0].username}</h6>
+                    <p></p>
                     <div class="btn-group-sm" role="group" aria-label="Basic outlined example">
-                        <button type="button" class="btn btn-outline-primary">0 Followers</button>
-                        <button type="button" class="btn btn-outline-primary">0 Following</button>
+                        <button type="button" class="btn btn-outline-danger">0 Followers</button>
+                        <button type="button" class="btn btn-outline-danger">0 Following</button>
                         </div>
                     <br></br>
                     <p>{thisGuy[0].bio}</p>
@@ -101,19 +103,19 @@ for (let i = 0; i < posts2.length; i++) {
 
         
         <br></br>
-        <div className="flex-row bg-warning border border-dark p-3 ">
+        <div className="flex-row greyback border border-dark p-3 ">
                     {frog.map(product => (
-                        <div className=" bg-warning border border-dark p-3">
+                        <div className="greyback border border-dark p-3">
                             <div className="d-flex"> 
                         <img src={product.pfp}  style={{height: 60, width: 60}} className="pfp rounded-pill border"></img>
                         <div className="row"> 
                         <h3>{product.name}</h3>
-                        <p className="text-primary" onClick={() => {props.setProfilePage(product.username); props.setPage('profile')}} >@{product.username}</p>
+                        <p className="text-redline" onClick={() => {props.setProfilePage(product.username); props.setPage('profile')}} >@{product.username}</p>
                         </div>
                         </div>
                         <h6>{product.content}</h6>
                         <button type="button" class="btn btn-primary">
-                            Like
+                        <img src={heart} classname="likes"></img>
                         </button>
                         </div>
                       ))}

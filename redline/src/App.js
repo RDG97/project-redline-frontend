@@ -9,10 +9,13 @@ import { useGlobalState } from './context/GlobalState';
 import { GlobalProvider } from './context/GlobalState';
 import MakePost from './MakePost';
 import YourProfile from './YourProfile';
+import CarView from './Carview';
+import NextCar from './NextCar';
+import CarStats from './CarStats';
 
 export default function App(props) {
   const [data, setData] = useState([]);
-  const baseURL = `https://8000-rdg97-projectredlineba-3mx4fceg9hi.ws-us77.gitpod.io/Posts/`
+  const baseURL = `https://8000-rdg97-projectredlineba-3mx4fceg9hi.ws-us78.gitpod.io/Posts/`
 
   const [profilePage, setProfilePage] = useState([]); 
 
@@ -22,6 +25,8 @@ export default function App(props) {
 
   const [page, setPage] = useState("home")
 
+  const [leftPage, setLeftPage] = useState("default")
+
   const [userList, setUserList] = useState([]);
 
   const [Likes, setLikes] = useState([]);
@@ -30,17 +35,23 @@ export default function App(props) {
 
   const [test, setTest] = useState([]);
 
-  const [showAll, setShowAll] = useState('show following')
+  const [showAll, setShowAll] = useState('show following');
 
-  const [followers2, setFollowers2] = useState([])
+  const [followers2, setFollowers2] = useState([]);
 
-  const [following2, setFollowing2] = useState([])
+  const [following2, setFollowing2] = useState([]);
+
+  const [car, setCar] = useState([]);
+
+  const [userCar, setUserCar] = useState([])
+
+  const [carList, setCarList] = useState([])
   
-  
+//https://www.carqueryapi.com/api/0.3/?callback=?&cmd=getTrims&make=ford&model=fiesta&year=2014 example API call
 
 
   useEffect(() => {
-    axios.get(`https://8000-rdg97-projectredlineba-3mx4fceg9hi.ws-us77.gitpod.io/Following/`).then((response) => {
+    axios.get(`https://8000-rdg97-projectredlineba-3mx4fceg9hi.ws-us78.gitpod.io/Following/`).then((response) => {
       const dataObj = response.data
       let followList = dataObj;
       console.log('follow list set! it looks like', followList)
@@ -81,7 +92,20 @@ export default function App(props) {
     })
     ;
   }, []);
-const userURL = 'https://8000-rdg97-projectredlineba-3mx4fceg9hi.ws-us77.gitpod.io/Users/'
+
+  useEffect(() => {
+    axios.get('https://8000-rdg97-projectredlineba-3mx4fceg9hi.ws-us78.gitpod.io/Vehicles/').then((response) => {
+      const dataObj = response.data
+      setCarList(dataObj);
+      console.log('CAR LIST set! it looks like', dataObj)
+    })
+    .catch(function (error){
+    console.log('ERROR: ', error)
+    })
+    ;
+  }, []);
+
+const userURL = 'https://8000-rdg97-projectredlineba-3mx4fceg9hi.ws-us78.gitpod.io/Users/'
 
   useEffect(() => {
     axios.get(userURL).then((response) => {
@@ -96,7 +120,7 @@ const userURL = 'https://8000-rdg97-projectredlineba-3mx4fceg9hi.ws-us77.gitpod.
   }, []);
 
   useEffect(() => {
-    axios.get('https://8000-rdg97-projectredlineba-3mx4fceg9hi.ws-us77.gitpod.io/PostLikes/').then((response) => {
+    axios.get('https://8000-rdg97-projectredlineba-3mx4fceg9hi.ws-us78.gitpod.io/PostLikes/').then((response) => {
       const dataObj = response.data
       setLikes(dataObj);
       console.log('got a likes response! it looks like:', dataObj)
@@ -109,7 +133,7 @@ const userURL = 'https://8000-rdg97-projectredlineba-3mx4fceg9hi.ws-us77.gitpod.
   console.log('LOGGEDAS LOGGEDAS', loggedAs)
 let followList
   useEffect(() => {
-    axios.get('https://8000-rdg97-projectredlineba-3mx4fceg9hi.ws-us77.gitpod.io/Following/').then((response) => {
+    axios.get('https://8000-rdg97-projectredlineba-3mx4fceg9hi.ws-us78.gitpod.io/Following/').then((response) => {
       const dataObj = response.data
       setFollowing(dataObj);
       
@@ -136,7 +160,7 @@ let followList
     console.log('logged followers', loggedFollows)
 
   if (state.currentUser != null && state.currentUser != undefined) {
-    const getbaseURL = `https://8000-rdg97-projectredlineba-3mx4fceg9hi.ws-us77.gitpod.io/Users/${state.currentUser.user_id}`
+    const getbaseURL = `https://8000-rdg97-projectredlineba-3mx4fceg9hi.ws-us78.gitpod.io/Users/${state.currentUser.user_id}`
     
   
     useEffect(() => {
@@ -177,11 +201,14 @@ async function getSomeDataFromBackend() {
   return (
     <GlobalProvider>
       <div id='App' className='d-flex p-3 bg-secondary text-white'>
-        <LeftDiv data={data} userList={userList} page={page} setPage={setPage} loggedAs={loggedAs} profilePage={profilePage} setProfilePage={setProfilePage} likes={Likes} setLikes={setLikes}/>
-        { page == 'home' && <Home showAll={showAll} setShowAll={setShowAll} following={following}test={test} setTest={setTest} state={state} data={data} userList={userList} page={page} setPage={setPage} loggedAs={loggedAs} profilePage={profilePage} setProfilePage={setProfilePage} Likes={Likes} setLikes={setLikes}/>}
+        { leftPage == 'default' && <LeftDiv data={data} leftPage={leftPage}  setLeftPage={setLeftPage} userList={userList} page={page} setPage={setPage} loggedAs={loggedAs} profilePage={profilePage} setProfilePage={setProfilePage} likes={Likes} setLikes={setLikes}/>}
+        { leftPage == 'nextcar' && <NextCar  userCar={userCar} setUserCar={setUserCar} data={data} car={car} setCar={setCar} leftPage={leftPage} setLeftPage={setLeftPage} userList={userList} page={page} setPage={setPage} loggedAs={loggedAs} profilePage={profilePage} setProfilePage={setProfilePage} likes={Likes} setLikes={setLikes}/>}
+        { leftPage == 'carstats' && <CarStats  userCar={userCar} setUserCar={setUserCar} data={data} car={car} setCar={setCar} leftPage={leftPage} setLeftPage={setLeftPage} userList={userList} page={page} setPage={setPage} loggedAs={loggedAs} profilePage={profilePage} setProfilePage={setProfilePage} likes={Likes} setLikes={setLikes}/>}
+        { leftPage == 'car' && <CarView data={data} car={car} setCar={setCar} leftPage={leftPage} setLeftPage={setLeftPage} userList={userList} page={page} setPage={setPage} loggedAs={loggedAs} profilePage={profilePage} setProfilePage={setProfilePage} likes={Likes} setLikes={setLikes}/>}
+        { page == 'home' && <Home showAll={showAll} setShowAll={setShowAll} following={following} test={test} setTest={setTest} state={state} data={data} userList={userList} page={page} setPage={setPage} loggedAs={loggedAs} profilePage={profilePage} setProfilePage={setProfilePage} Likes={Likes} setLikes={setLikes}/>}
         { page == 'makepost' && <MakePost setPage={setPage} loggedAs={loggedAs} likes={Likes} setLikes={setLikes}/>}
-        {page == 'profile' && <Profile data={data} userList={userList} page={page} setPage={setPage} loggedAs={loggedAs} profilePage={profilePage} setProfilePage={setProfilePage} likes={Likes} setLikes={setLikes}/>}
-        {page == 'yourprofile' && <YourProfile data={data} userList={userList} page={page} setPage={setPage} loggedAs={loggedAs} profilePage={profilePage} setProfilePage={setProfilePage} likes={Likes} setLikes={setLikes}/>}
+        {page == 'profile' && <Profile carList={carList} setCarList={setCarList} data={data} userList={userList} page={page} setPage={setPage} loggedAs={loggedAs} profilePage={profilePage} setProfilePage={setProfilePage} likes={Likes} setLikes={setLikes}/>}
+        {page == 'yourprofile' && <YourProfile data={data}  following={following} setFollowing={setFollowing}userList={userList} page={page} setPage={setPage} loggedAs={loggedAs} profilePage={profilePage} setProfilePage={setProfilePage} likes={Likes} setLikes={setLikes}/>}
         
         <AccountPage data={data} userList={userList} page={page} setPage={setPage} following2={following2} followers2={followers2} setFollowing2={setFollowing2} setFollowers2={setFollowers2} loggedAs={loggedAs} profilePage={profilePage} setProfilePage={setProfilePage} likes={Likes} setLikes={setLikes}/>
       
