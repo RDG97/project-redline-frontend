@@ -19,6 +19,7 @@ export default function AccountPage(props) {
   const [ state, dispatch ] = useGlobalState(); 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [proFollow, setProFollow] = useState([])
 
 
 
@@ -47,7 +48,7 @@ export default function AccountPage(props) {
 
 
 handleLogin(lusername,lpassword)
-setTimeout(() => { window.location.reload()}, "200")
+setTimeout(() => { window.location.reload()}, "400")
   }
 
 
@@ -107,9 +108,18 @@ function postview() {
 }
 
 
-let following = props.following
-let followers = props.followers
+let followList = props.following
+
 console.log('FOLLOWING DATA 2', props.following)
+
+
+
+
+
+
+
+
+
 
 
     return (
@@ -124,7 +134,7 @@ console.log('FOLLOWING DATA 2', props.following)
           !state.currentUser && (
             <>
             <p>you arent signed in!</p>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginBackdrop">
+            <button type="button" class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#loginBackdrop">
                 Log in
             </button>
 
@@ -142,7 +152,7 @@ console.log('FOLLOWING DATA 2', props.following)
                         
                         <button type="button" class="btn btn-outline-danger">{0} Following</button>
                         </div>
-              <a class="btn btn-primary"  onClick={logout} role="button">Log Out</a>
+              <a class="btn btn-primary mx-1"  onClick={logout} role="button">Log Out</a>
               <button type="button" class="btn btn-primary" onClick={postview} data-bs-target="#loginBackdrop">
                 Make a post
             </button>

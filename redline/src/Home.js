@@ -1,3 +1,4 @@
+import heart from '/workspace/project-redline-frontend/redline/src/img/heart.png'
 import axios from "axios";
 import { useEffect, useState, state } from "react";
 import { GlobalProvider } from './context/GlobalState';
@@ -119,9 +120,9 @@ let auth = props.userList.filter(brek =>
     return (
         <>
         <div className='d-flex p-3 home greyback text-white flex-fill '> <div className='container'><input class="form-control me-2 rounded" type="text" placeholder="Search"></input>
-
+        <center>
         <button type="button" class="btn btn-primary" id="showAll" onClick={showem}>{props.showAll}</button>
-
+        </center>
         <br></br>
         <div className="greyback border border-dark p-3">
 
@@ -136,7 +137,7 @@ let auth = props.userList.filter(brek =>
             </div>
             <h6>{product.content}</h6>
             <button type="button" class="btn btn-primary like" onClick={() => {likePost(product.id); props.setProfilePage(product.username)}}>
-                {product.likes} Likes
+                <img src={heart} classname="likes"></img> {product.likes}
             </button>
             </div>
           ))}

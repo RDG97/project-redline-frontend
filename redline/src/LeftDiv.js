@@ -1,3 +1,4 @@
+import redline from '/workspace/project-redline-frontend/redline/src/img/redline.png'
 export default function LeftDiv(props) {
     function homeview() {
         props.setPage('home')
@@ -10,9 +11,10 @@ export default function LeftDiv(props) {
 
     return(
         <div className='d-flex p-3 greyback text-white asside d-none d-lg-block'>
-        <button type="button" class="btn btn-primary" onClick={homeview} >(HERE 4 DEBUG) home view</button>
-        <br></br>
-        <button type="button" class="btn btn-primary"  onClick={car}>LOOK AT CAR</button>
+            <img src={redline} className="img-fluid"></img>
+        <button type="button" class="btn btn-primary mx-1" onClick={homeview}>Home</button>
+        
+        <button type="button" class="btn btn-primary"  onClick={car}>Browse cars</button>
         </div>
     )
 }

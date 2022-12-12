@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import heart from '/workspace/project-redline-frontend/redline/src/img/heart.png'
 import {
     Chart as ChartJS,
     RadialLinearScale,
@@ -146,6 +147,7 @@ let stats
                       <div className="row text-center">
                     <h1 className="text-dark">{thisCar[0].car_make} {thisCar[0].car_model} </h1>
                     <h4 className="text-dark">{thisCar[0].car_trim}</h4>
+                    <h4 className="text-dark">"{thisCar[0].nickname}"</h4>
                     </div>
                     <Radar className="text-light" data={data} />
                     </div>
@@ -171,9 +173,9 @@ let stats
                     <h3>{thisGuy[0].screen_name}</h3>
                     <h6>@{thisGuy[0].username}</h6>
                     <div class="btn-group-sm" role="group" aria-label="Basic outlined example">
-                        <button type="button" class="btn btn-outline-primary"> {proFollow.length} Followers</button>
+                        <button type="button" class="btn btn-outline-danger"> {proFollow.length} Followers</button>
                         <button type="button" class="btn btn-outline bg-light" onClick={followw} >Follow</button>
-                        <button type="button" class="btn btn-outline-primary">{proFollowing.length} Following</button>
+                        <button type="button" class="btn btn-outline-danger">{proFollowing.length} Following</button>
                         </div>
                     <br></br>
                     <p>{thisGuy[0].bio}</p>
@@ -194,12 +196,12 @@ let stats
                         <img src={product.pfp}  style={{height: 60, width: 60}} className="pfp rounded-pill border"></img>
                         <div className="row"> 
                         <h3>{product.name}</h3>
-                        <p className="text-primary" onClick={() => {props.setProfilePage(product.username); props.setPage('profile')}} >@{product.username}</p>
+                        <p className="text-redline" onClick={() => {props.setProfilePage(product.username); props.setPage('profile')}} >@{product.username}</p>
                         </div>
                         </div>
                         <h6>{product.content}</h6>
                         <button type="button" class="btn btn-primary">
-                            Like
+                        <img src={heart} classname="likes"></img>
                         </button>
                         </div>
                       ))}
