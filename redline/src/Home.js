@@ -44,7 +44,7 @@ function likePost(postId) {
     console.log('post likes looks like: ', postlikes)
     if (postlikes.length === 0) {
     console.log('postID: ', postId)
-    axios.post('https://8000-rdg97-projectredlineba-3mx4fceg9hi.ws-us78.gitpod.io/PostLikes/', {
+    axios.post('https://project-redline-backend.ue.r.appspot.com/PostLikes/', {
     liker: props.loggedAs.id,
     post: postId
     })

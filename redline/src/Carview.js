@@ -18,7 +18,7 @@ export default function CarView(props) {
     let us = document.getElementById('us').checked
     console.log(`year: ${year} make: ${make} model: ${model} us: ${us}`);
 
-    let carURL = `https://8000-rdg97-projectredlineba-3mx4fceg9hi.ws-us78.gitpod.io/cars/?make=${make}&model=${model}&year=${year}`
+    let carURL = `https://project-redline-backend.ue.r.appspot.com/cars/?make=${make}&model=${model}&year=${year}`
 
     //let carURL = "https://8000-rdg97-projectredlineba-3mx4fceg9hi.ws-us77.gitpod.io/cars/?make=ford&model=mustang&year=2016"
 
@@ -82,7 +82,7 @@ export default function CarView(props) {
   <div class="row">
     <div class="col-sm-10">
       <button type="button" class="btn btn-primary" onClick={searchCar}>Search Cars</button>
-      <button type="button" class="btn btn-primary" onClick={ifcar}>check car state</button>
+      
     </div>
     
   </div>
